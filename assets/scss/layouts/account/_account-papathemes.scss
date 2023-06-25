@@ -1,0 +1,36 @@
+.container .account {
+    padding: 0;
+    margin-top: spacing("base");
+
+    .form-field {
+        margin-bottom: spacing("single");
+    }
+
+    .account-body {
+        margin: 0;
+    }
+
+    @include breakpoint("medium") {
+        .productGrid {
+            .product {
+                flex-basis: 20%;
+            }
+        }
+    }
+
+    @media (max-width: (screenSize("small") - 1px)) {
+        .form-field {
+            margin-bottom: spacing("base");
+        }
+    }
+}
+
+.account--fixed {
+    @include breakpoint("medium") {
+        width: 80%;
+    }
+
+    @include breakpoint("large") {
+        width: 60%;
+    }
+}

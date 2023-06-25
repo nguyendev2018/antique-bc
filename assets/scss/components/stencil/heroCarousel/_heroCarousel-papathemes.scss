@@ -1,0 +1,400 @@
+.heroCarousel-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+
+    @if $theme-style == "compact" {
+        @include breakpoint("medium") {
+            margin-bottom: spacing("half");
+        }
+    }
+    
+    .slick-dots {
+        bottom: calc(#{spacing("double")} * -0.9);
+        @media (max-width: (screenSize("medium") - 1px)) {
+            bottom: calc(#{spacing("double")} * -0.7);
+        }
+    }
+
+    &:has(.heroCarousel-content) {
+        .slick-dots {
+            @media (max-width: (screenSize("small") - 1px)) { 
+                bottom: calc(#{spacing("base")} * -1.5);
+            }
+        }
+    }
+}
+
+
+.heroCarousel {
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 100%;
+
+    .js & {
+        opacity: 1;
+        max-height: none;
+        transition: none;
+    }
+
+    @media (max-width: screenSize("medium") - 1px) {
+        padding-bottom: spacing("single") + spacing("base");
+    }
+
+    @include breakpoint("medium") {
+        width: auto;
+        flex: 1 1 0;
+    }
+
+    &.slick-initialized {
+        max-height: none;
+    }
+
+    &.slick-dotted {
+        margin-bottom: 0;
+    }
+}
+
+.heroCarousel .slick-next,
+.heroCarousel .slick-prev {
+    top: 50%;
+    display: none !important;
+
+    @include breakpoint("medium") {
+        display: block !important;
+    }
+}
+
+.heroCarousel .slick-dots li {
+    height: auto;
+    width: auto;
+    padding: remCalc(5px);
+
+    // papathemes-beautify deleted button
+
+    button,
+    button::before {
+        @include square(6px);
+        border-radius: remCalc(3px);
+        transition: all 0.5s ease;
+    }
+
+    &.slick-active {
+        button,
+        button::before {
+            width: remCalc(30px);
+        }
+    }
+
+
+}
+
+.js {
+    .heroCarousel-slide:first-child {
+        display: block;
+    }
+
+    .heroCarousel-slide + .heroCarousel-slide {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    // .heroCarousel-slide:not(.slick-slide),
+    // .heroCarousel-slide.slick-slide:not(.slick-active) {
+    //     background-image: none !important;
+    // }
+
+    .slick-initialized .heroCarousel-slide + .heroCarousel-slide {
+        opacity: 1;
+        max-height: none;
+    }
+}
+
+.heroCarousel-slide {
+    .heroCarousel-image-wrapper {
+        max-height: none;
+    }
+
+    .heroCarousel-image {
+        max-height: none;
+    
+    }
+
+    a {
+        display: block;
+    }
+}
+
+.heroCarousel-image-box {
+    @include breakpoint("medium") {
+        border-radius: $container-border-radius;
+    }
+    border-radius: $container-border-radius;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+    // overflow: hidden;
+
+    @media (max-width: (screenSize("small") - 1px)) {
+        border-radius: $container-border-radius;
+        overflow: hidden;
+    }
+}
+
+.heroCarousel-image-box-padding {
+    height: 0;
+}
+
+.heroCarousel-image {
+    width: 100%;
+
+    &.lazyload,
+    &.lazyloading {
+        // width: auto; // comment out to fix error image smaller while loading http://prntscr.com/ukh8z8
+
+        .heroCarousel-image-wrapper:not(.heroCarousel-image-wrapper--sized) & + .heroCarousel-content {
+            opacity: 0;
+        }
+    }
+
+    @include breakpoint("medium") {
+        width: auto;
+    }
+}
+
+.heroCarousel-content {
+    background-color: rgba($carousel-bgColor, stencilNumber("carousel-bgColor-opacity", "") / 100);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    @include breakpoint("medium") {
+        width: 100%;
+        padding: spacing("double");
+    }
+    padding: spacing("base");
+    @media (max-width: (screenSize("small") - 1px)) {
+        .heroCarousel-action {
+            padding: spacing("third") spacing("half");
+            font-size: fontSize("smallest");
+        }
+        position: unset;
+        transform: unset;
+    }
+
+}
+
+.heroCarousel-video-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.heroCarousel-video {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    padding-bottom: stencilString("carousel-video-ratio");
+    transform: translateY(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+
+    .slick-active & {
+        visibility: visible;
+    }
+
+    .heroCarousel:not([data-youtube-autoplay]) &,
+    .slick-video-playing & {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+//
+// Make position of carousel description text of each slide
+// to left or right depends on theme settings
+//
+@for $i from 0 through 4 {
+    @if stencilString("carousel-slide#{$i}-position") == "left" {
+        .heroCarousel-slide--#{$i} .heroCarousel-content {
+            text-align: left;
+            @include breakpoint("medium") {
+                left: 10%;
+                right: 50%;
+                width: auto;
+            }
+            // papathemes-beautify
+            @include breakpoint("xlarge") {
+                max-width: 39rem;
+            }
+            @include breakpoint("xxlarge") {
+                max-width: 41rem;
+            }
+        }
+    }
+    @else if stencilString("carousel-slide#{$i}-position") == "right" {
+        .heroCarousel-slide--#{$i} .heroCarousel-content {
+            text-align: right;
+            @include breakpoint("medium") {
+                left: 50%;
+                right: 10%;
+                width: auto;
+            }
+            // papathemes-beautify
+            @include breakpoint("xlarge") {
+                max-width: 39rem;
+            }
+            @include breakpoint("xxlarge") {
+                max-width: 41rem;
+            }
+        }
+    }
+    @else if stencilString("carousel-slide#{$i}-position") == "center" {
+        .heroCarousel-slide--#{$i} .heroCarousel-content {
+            text-align: center;
+            @include breakpoint("medium") {
+                left: 0;
+                right: 0;
+                width: auto;
+            }
+            // papathemes-beautify
+            @include breakpoint("xlarge") {
+                max-width: 39rem;
+            }
+            @include breakpoint("xxlarge") {
+                max-width: 41rem;
+            }
+        }
+    }
+}
+
+
+// papathemes-beautify edited
+.heroCarousel-title {
+    font-family: $header-font-family;
+    font-weight: $header-font-weight;
+    font-size: stencilNumber("carousel-title-fontSize-mobile");
+    line-height: 1.1;
+    margin-bottom: spacing("quarter");
+    @include breakpoint("medium") {
+        font-size: stencilNumber("carousel-title-fontSize");
+        margin-bottom: spacing("half");
+    }
+}
+
+.heroCarousel-description {
+    font-size: stencilNumber("carousel-description-fontSize-mobile");
+    margin-bottom: spacing("half");
+    @include breakpoint("medium") {
+        font-size: stencilNumber("carousel-description-fontSize");
+        margin-bottom: 0;
+    }
+}
+
+.heroCarousel .slick-arrow {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    opacity: 0.3;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus {
+        outline-offset: 2px !important;
+    }
+}
+
+.heroCarousel .slick-next,
+.heroCarousel .slick-prev {
+    @include breakpoint("medium") {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+    display: none;
+
+}
+
+.heroCarousel--boxed .slick-prev {
+    @media screen and (min-width: 1440px) {
+        left: -100px !important;
+    }
+    left: 20px !important;
+
+    &::before {
+        margin: 0 auto;
+    }
+}
+
+.heroCarousel--boxed .slick-next {
+    @media screen and (min-width: 1440px) {
+        right: -100px !important;
+    }
+    right: 20px !important;
+
+    &::before {
+        margin: 0 auto;
+    }
+}
+
+.heroCarousel--boxed {
+    position: static;
+}
+
+.heroCarousel .slick-dots {
+    @include breakpoint("medium") {
+        bottom: - spacing("base") * 2.65;
+    }
+    bottom: - spacing("base") * 2;
+}
+
+.heroCarousel-container-bg._has-right .heroCarousel .slick-dots,
+.heroCarousel-container-bg._has-left .heroCarousel .slick-dots,
+.heroCarousel-container-bg._has-left._has-right .heroCarousel .slick-dots {
+    bottom: - spacing("base") * 2.4;
+    @media (max-width: 1024px) {
+        bottom: - spacing("base") * 2.7;
+    }
+    @media (max-width: (screenSize("small") - 1px)) {
+        bottom: - spacing("base") * 2;
+    }
+}
+
+.heroCarousel-content .button--outline {
+    color: stencilColor("carousel-title-color");
+    border-color: stencilColor("carousel-title-color");
+
+    &:focus,
+    &:hover {
+        color: stencilColor("carousel-dot-color-active");
+        border-color: stencilColor("carousel-dot-color-active");
+    }
+}
+
+.heroCarousel {
+    padding-bottom: 0 !important;
+
+    &:hover {
+        .slick-arrow {
+            opacity: 0.3;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

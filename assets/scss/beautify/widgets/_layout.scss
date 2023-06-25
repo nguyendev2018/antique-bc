@@ -1,0 +1,228 @@
+[data-layout-name] {
+    @if stencilNumber("widget-layout-maxWidth", "") != 0 {
+        max-width: stencilNumber("widget-layout-maxWidth");
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+%mooncat__widget-colored-data-sub-layout {
+    border-radius: $container-border-radius;
+
+    [data-sub-layout] {
+        border-radius: $container-border-radius;
+        overflow: hidden;
+        height: max-content;
+
+        .slick-dots {
+            li {
+                transition: width 0.2s linear;
+
+                button::before {
+                    background-color: stencilColor("carousel-dot-color");
+                }
+
+                &.slick-active {
+                    width: spacing("double") * 1.2;
+                    height: spacing("base") * 1.25;
+
+                    button {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    button::before {
+                        background-color: stencilColor("carousel-dot-color-active");
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 10px;
+                    }
+                }
+            }
+        };
+    }
+}
+%data-layout-boxed { 
+    @extend %mooncat__widget-colored-data-sub-layout;
+    @include breakpoint("medium") { 
+        padding: 0 1.5rem;
+    }
+    @media screen and (max-width : 1023px) {
+        padding: 0 0.75rem;
+    }
+    @media (min-width: (remCalc(stencilNumber("widget-layout-maxWidth")) + spacing("double"))) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+[data-layout-name="CATEGORIES"] {
+    @extend %data-layout-boxed ;
+
+    .container {
+        max-width: 1200px;
+    }  
+
+    ._imgContainer {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .slick-track {
+        padding-top: remCalc(20);
+        padding-bottom: remCalc(20);
+    }
+
+    .slick-dots {
+        bottom: -24px;
+        @media (max-width: (screenSize("medium") - 1px)) { 
+            bottom: -10px;
+        }
+    }
+
+    .slick-dotted.slick-slider {
+        @media (max-width: (screenSize("medium") - 1px)) { 
+            margin-bottom: remCalc(10);
+        }
+    }
+}
+
+[data-layout-name="TOP CATEGORIES"] {
+    @extend %mooncat__widget-colored-data-sub-layout;
+    @include beautify__container;
+}
+
+[data-layout-name="TOP BANNER CATEGORY"] {
+    @extend %mooncat__widget-colored-data-sub-layout;
+
+    > [data-sub-layout] {
+        height: unset;
+    }
+
+    .slick-list {
+        margin: auto;
+    }
+
+    ._description {
+        padding: spacing("third") * 0.5;
+
+        > p {
+            word-break: break-all;
+            line-height: 1;
+        }
+        @include breakpoint("small") {
+            padding: spacing("third");
+        }
+        @include breakpoint("large") {
+            padding: spacing("base");
+        }
+    }
+    @include breakpoint("small") {
+        .chiara__flexBanners {
+            padding-right: spacing("single");
+        }
+    }
+    @media (max-width:700px) {
+        .chiara__flexBanners [data-index="0"] ._imgContainer img {
+            width: 100%;
+        }
+
+        .chiara__flexBanners {
+            margin-bottom: spacing("single");
+            padding-right: 0;
+
+            ._col[data-index="0"] {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+[data-layout-name="SHOP BY PET"] {
+    @extend %mooncat__widget-colored-data-sub-layout;
+    @include beautify__container;
+
+    > [data-sub-layout] {
+        max-width: stencilNumber("widget-layout-maxWidth");
+        height: max-content;
+    }
+
+    .slick-list {
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    ._description {
+        padding: spacing("base") * 0.5;
+        @include breakpoint("small") {
+            padding: spacing("single");
+        }
+    }
+}
+
+[data-layout-name="BOXED"] {
+    @include beautify__container;
+    @extend %mooncat__widget-colored-data-sub-layout;
+    
+}
+
+[data-layout-name="FLUID"] {
+    max-width: none;
+}
+
+[data-layout-name="ROUNDED"] {
+    @extend %mooncat__widget-colored-data-sub-layout;
+
+    .slick-dots li button::before {
+        border: spacing("eighth") solid stencilColor("container-border-global-color-base");
+    }
+
+}
+
+[data-layout-name="KITTEN PUPPY"] {
+    @include beautify__container;
+    padding: 0;
+
+    [data-sub-layout] {
+        height: 100%;
+
+        &::after {
+            background-position: top center;
+            background-size: contain;
+            border-radius: $container-border-radius;
+        }
+    }
+
+    @include breakpoint("large") {
+        padding: 0;
+
+        [data-sub-layout] {
+            &::after {
+                background-size: cover;
+            }
+        }
+    }
+
+    @include breakpoint("small") {
+        @media (max-width: (screenSize("large") - 1px)) {
+            padding: 0;
+
+            [data-sub-layout] {
+                &::after {
+                    background-size: cover;
+                    border-radius: $container-border-radius / 2;
+                }
+            }
+        } 
+    }
+
+    @media (max-width: (screenSize("small") - 1px)) { 
+        padding: 0;
+
+        [data-sub-layout] {
+            &::after {
+                background-size: cover;
+                border-radius: $container-border-radius / 2;
+            }
+        }
+    }
+}

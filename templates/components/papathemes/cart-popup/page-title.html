@@ -1,0 +1,9 @@
+<h2 class="_heading" data-cart-page-title>
+    <a href="{{urls.cart}}">
+    <span class="_label">{{lang 'cart.preview.label'}} </span> <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shopping-bag"></use></svg>{{lang 'cart.preview.qty'}}
+    {{#if cart.quantity '>' 0}}
+        <span>{{cart.quantity}}</span>
+    {{/if}}
+    </a>
+    <a href="{{urls.cart}}"><span class="_label">{{lang 'cart.preview.edit_cart'}}</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-cart"></use></svg></a>
+</h2>

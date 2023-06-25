@@ -1,0 +1,285 @@
+.footer {
+    padding: 0;
+    border-top: 0;
+    color: stencilColor("footer-color");
+
+    a {
+        text-decoration: none;
+        color: stencilColor("footer-linkColor");
+		
+        &:hover,
+        &:focus,
+        &:active {
+            color: stencilColor("footer-linkColor-hover");
+        }
+    }
+
+    address {
+        font-style: normal;
+    }
+}
+
+.footer-info {
+    margin: 0;
+    padding: spacing("single") + spacing("half") 0 0; // papathemes-beautify edited
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    @include breakpoint("medium") {
+        margin: 0;
+        // papathemes-beautify added
+        padding-top: spacing("single") * 2.5;
+        padding-bottom: 0;
+    }
+}
+
+.footer-info-col {
+    color: stencilColor("footer-color");
+    flex: 1 1 100%;
+    max-width: 100%; // Require for IE 11
+    min-width: 100%;
+    width: auto;
+    text-align: left;
+    @include breakpoint("medium") {
+        flex-basis: width("3/12");
+        min-width: width("3/12");
+        max-width: width("3/12"); // Require for IE 11
+    }
+
+    .fa-ul {
+        margin-left: 0;
+        margin-bottom: spacing("single");
+        @include breakpoint("medium") {
+            margin-left: spacing("single") + spacing("quarter");
+        }
+
+        li {
+            margin-bottom: spacing("half");
+        }
+    }
+
+    .fa-li {
+        left: -(spacing("single") + spacing("half"));
+        display: none;
+
+        @include breakpoint("medium") {
+            display: inline;
+        }
+    }
+}
+
+.footer-info._has-newsletter,
+.footer-info:has([data-content-region="footer_above_col5--global"]>div>div[data-sub-layout-container]),
+.footer-info:has([data-content-region="footer_below_col5--global"]>div>div[data-sub-layout-container]) {
+    .footer-info-col {
+        color: stencilColor("footer-color");
+        flex: 1 1 100%;
+        max-width: 100%; // Require for IE 11
+        min-width: 100%;
+        width: auto;
+        text-align: left;
+        @include breakpoint("medium") {
+            flex-basis: width("2/12");
+            min-width: width("2/12");
+            max-width: width("2/12"); // Require for IE 11
+        }
+    }
+
+    .footer-info-col.footer-info-col--newsletter {
+        max-width: 100%;
+        flex-basis: 100%;
+        @include breakpoint("medium") {
+            flex-basis: width("4/12");
+            min-width: width("4/12");
+            max-width: width("4/12"); // Require for IE 11
+        }
+        @media (max-width: screenSize("medium") - 1px) {
+            order: -1;
+            margin-bottom: spacing("single");
+            @if(stencilString("footer-secondary-style") != "footer") {
+                order: unset;
+                border-top: 1px solid rgba(stencilColor("footer-color"), 0.2);
+                padding-top: spacing("single");
+                margin-top: spacing("single");
+            } @else {
+                padding-bottom: spacing("single");
+                margin-bottom: spacing("single");
+            }
+        }
+    }
+}
+
+.footer-info-heading {
+    color: stencilColor("footer-headingColor");
+    font-size: fontSize("larger");
+    font-weight: fontWeight("normal"); // papathemes-beautify edited
+    margin: 0 0 spacing("half"); // papathemes-beautify edited
+    @include breakpoint("small") {
+        text-align: left;
+    }
+
+    // papathemes-beautify added
+    @include breakpoint("medium") {
+        margin-bottom: spacing("single"); // papathemes-beautify edited
+    }
+}
+
+.footer-info-text {
+    margin-bottom: spacing("single");
+}
+
+.footer-logo-text {
+    font-size: stencilNumber("logo_fontSize");
+}
+
+.footer-info-list {
+    li {
+        margin: 0 0 spacing("half"); // papathemes-beautify edited
+    }
+
+    a {
+        color: stencilColor("footer-color");
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: stencilColor("footer-color-hover");
+        }
+    }
+}
+
+
+// papathemes-beautify deleted .footer-info-col--about
+
+// papathemes-beautify added
+.footer-info-col--2col {
+    @include breakpoint("medium") {
+        flex-basis: width("6/12");
+        min-width: width("6/12");
+        max-width: width("6/12"); // Require for IE 11
+    }
+}
+
+
+// papathemes-beautify edited
+.footer-copyright {
+    background: stencilColor("copyright-backgroundColor");
+    color: stencilColor("copyright-color");
+    text-align: inherit; // papathemes-beautify edited
+
+    a {
+        color: inherit;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .container {
+        @media (max-width: screenSize("medium") - 1px) {
+            margin: 0;
+            width: auto;
+            padding: 0;
+        }
+    }
+
+    .powered-by {
+        display: flex;
+        align-items: center;
+        padding: spacing("single") 0;
+
+        ._col {
+            &:first-child {
+                padding-right: spacing("single");
+            }
+
+            + ._col {
+                border-left: container("border");
+                padding-left: spacing("single");
+                text-align: right;
+            }
+        }
+
+        ._heading {
+            font-size: beautify__fontSize(22);
+            font-weight: fontWeight("bold");
+            display: block;
+        }
+        @include breakpoint("medium") {
+            ._col {
+                flex: auto;
+            }
+        }
+    }
+
+}
+
+// ----------------------------------------------------------------------------
+// Block About Us
+// ----------------------------------------------------------------------------
+
+.footer-logo {
+    margin: 0 0 spacing("single");
+
+    a {
+        text-decoration: none;
+    }
+}
+
+
+// ----------------------------------------------------------------------------
+// Brands Carousel on footer
+// ----------------------------------------------------------------------------
+.papathemes-brandCarousel-container {
+    text-align: center;
+    font-size: fontSize("base");
+}
+
+.papathemes-brandCarousel {
+    margin-bottom: 0;
+}
+
+.papathemes-brandCarousel-slide {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 spacing("half");
+    display: inline-block;
+
+    a {
+        font-size: fontSize("large");
+        text-decoration: none;
+        display: block;
+        white-space: nowrap;
+
+        &:hover img,
+        &:focus img {
+            opacity: 0.5;
+        }
+    }
+
+    img {
+        opacity: 1;
+        margin: 0 auto;
+
+        &.lazyload {
+            height: 0;
+        }
+    }
+}
+
+.papathemes-brandCarousel .slick-track {
+    margin: 0 auto;
+}

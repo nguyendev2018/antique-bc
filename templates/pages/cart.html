@@ -1,0 +1,103 @@
+---
+cart: true
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+---
+{{inject 'cancelButtonText' (lang 'common.cancel')}}
+{{#partial "page"}}
+<div class="page">
+    <main class="page-content" data-cart>
+        {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+        
+        {{> components/cart/page-title}}
+        
+        <div data-cart-status>
+            {{> components/cart/status-messages}}
+            {{#if in_development}}
+                <div class="cart-status">
+                    <div class="alertBox alertBox--info">
+                        <div class="alertBox-column alertBox-message">
+                            📦 Free shipping over 59 Euro - Code: IRISH
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+
+        {{{region name="cart_below_header"}}}
+
+        <div class="loadingOverlay"></div>
+
+        {{#if cart.items.length}}
+            <div class="beautify__cart">
+                <div class="_left">
+                    <div class="cart-contentWrapper" data-cart-content>
+                        {{> components/cart/content}}
+                    </div>
+                    {{{region name="cart_content"}}}
+                </div>
+                <div class="_right">
+                    {{{region name="cart_above_totals"}}}
+
+                    <div class="cart-totalsWrapper">
+                        <div data-cart-totals>
+                            {{> components/cart/totals}}
+                        </div>
+
+                        <div class="cart-actions-wrapper">
+                            {{#if cart.show_primary_checkout_button}}
+                                <div class="cart-actions">
+                                    <a href="{{urls.checkout.single_address}}" class="button button--primary">
+                                        <svg class="icon"><use xlink:href="#icon-lock"></use></svg>{{lang 'cart.preview.checkout_now'}}
+                                    </a>
+                                    {{#if cart.show_multiple_address_shipping}}
+                                        <a class="button _checkoutMultiple" href="{{urls.checkout.multiple_address}}">
+                                            {{lang 'cart.preview.checkout_multiple'}}
+                                        </a>
+                                    {{/if}}
+                                </div>
+                            {{else}}
+                                <div class="cart-actions">
+                                    <a class="button" href="{{urls.home}}" title="{{lang 'cart.continue_shopping'}}">{{lang 'cart.continue_shopping'}}</a>
+                                </div>
+                            {{/if}}
+                        </div>
+    
+                        <div data-cart-additional-checkout-buttons class="cart-additionalCheckoutButtons">
+                            {{> components/cart/additional-checkout-buttons}}
+                        </div>
+                        <div class="cart-payment">
+                            <h3 class="cart-payment-heading">{{lang 'footer.accepted_payments'}}</h3>
+                            {{> components/common/payment-icons}}
+                        </div>
+                    </div>
+
+                    {{{region name="cart_below_totals"}}}
+                    {{{region name="cart_below_checkout_button"}}}
+                </div>
+            </div>
+        {{else}}
+            <h3 class="cart-emptyText">{{lang 'cart.checkout.empty_cart'}}</h3>
+            {{{region name="cart_content_empty"}}}
+        {{/if}}
+
+        {{{snippet 'cart'}}}
+
+        {{{region name="cart_bottom"}}}
+        <div class="_suggests">
+            {{#if cart.items.length}}
+                <div class="beautify__section beautify__section--cartSuggestedProducts beautify__section--displayType-{{theme_settings.product_cartsuggested_type}}">
+                    {{> components/products/cart-suggested display_type=theme_settings.product_cartsuggested_type}}
+                </div>
+            {{/if}}
+            <div class="beautify__section beautify__section--recentlyViewedProducts beautify__section--displayType-{{theme_settings.product_recentviewed_type}}">
+                {{> components/products/recentviewed display_type=theme_settings.product_recentviewed_type}}
+            </div>
+        </div>
+    </main>
+</div>
+{{/partial}}
+{{> layout/base}}

@@ -1,0 +1,63 @@
+---
+product:
+    videos:
+        limit: 100
+    reviews:
+        limit: {{theme_settings.productpage_reviews_count}}
+    related_products:
+        limit: {{theme_settings.productpage_related_products_count}}
+    similar_by_views:
+        limit: {{theme_settings.productpage_similar_by_views_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+gql: "query productById($productId: Int!) {
+    site {
+        product(entityId: $productId) {
+            brand {
+                name
+                defaultImage {
+                    url(width: 60, height: 60)
+                    urlOriginal
+                    altText
+                }
+                path
+            }
+        }
+    }
+}"
+---
+{{#partial "hero"}}
+    <div class="beautify__productPage-top">
+        <div class="container">
+            {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+
+            {{#each product.shipping_messages}}
+                {{> components/common/alert-info message}}
+            {{/each}}
+        </div><!-- .container -->
+    </div>
+
+    <div itemscope class="productView-scope">
+        {{> components/products/product-view}}
+
+        <div class="container">
+            {{{region name="product_below_content--global"}}}
+            {{{region name="product_below_content"}}}
+        </div><!-- .container -->
+    </div>
+
+    <div class="productView-productTabs">
+        {{> components/products/tabs}}
+    </div>
+
+    {{> components/products/schema}}
+{{/partial}}
+{{#and theme_settings.instantload is_ajax}}
+    {{> layout/instantload-base}}
+{{else}}
+    {{> layout/base}}
+{{/and}}
+

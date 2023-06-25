@@ -1,0 +1,31 @@
+.beautify__flexBanners {
+    ._banner {
+        ._heading {
+            line-height: 1.2;
+        }
+
+        ._description {
+            margin-top: 0;
+            margin-bottom: spacing("third");
+        }
+
+        ._buttonLine {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    
+    }
+
+    &[data-test-theme="mooncat"] {
+        ._buttonLine {
+            .button--outline {
+                border-color: stencilColor("color-secondary");
+                color: stencilColor("color-secondary");
+
+                &:hover {
+                    background: rgba(stencilColor("color-secondary"), 0.1);
+                }
+            }
+        }
+    }
+}

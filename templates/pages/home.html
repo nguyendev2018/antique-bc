@@ -1,0 +1,74 @@
+---
+products:
+    new:
+        limit: {{theme_settings.product_new_count}}
+    featured:
+        limit: {{theme_settings.product_featured_count}}
+    top_sellers:
+        limit: {{theme_settings.product_top_count}}
+carousel: {{theme_settings.homepage_show_carousel}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+---
+{{#partial "hero"}}
+    {{{region name="home_below_menu"}}}
+
+    <div class="container">
+        {{#each shipping_messages}}
+            {{> components/common/alert-info message}}
+        {{/each}}
+    </div>
+
+    <div class="heroCarousel-container-bg
+        {{#if theme_settings.carousel_right_col}} _has-right {{/if}}
+        {{#if theme_settings.carousel_left_col}} _has-left {{/if}}
+    ">
+        <div class="container container--papathemes-section1-{{theme_settings.homepage_carousel_style}}" id="papathemes-section1-container">
+            {{#if theme_settings.carousel_top_row}}
+                <div class="heroCarousel-top-row">
+                    {{{region name="home_carousel_top"}}}
+                </div>
+            {{/if}}
+            {{#if theme_settings.carousel_left_col}}
+                <div class="heroCarousel-left-col">
+                    {{{region name="home_carousel_left"}}}
+                </div>
+            {{/if}}
+            <div class="papathemes-section1 papathemes-section1--{{theme_settings.homepage_carousel_style}}">
+                {{> components/papathemes/sections/section section="slideshow"}}
+            </div>
+            {{#if theme_settings.carousel_right_col}}
+                <div class="heroCarousel-right-col">
+                    {{{region name="home_carousel_right"}}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    {{{snippet 'home_content'}}}
+    {{{region name="home_below_carousel"}}}
+
+    <div class="main full">
+        {{> components/papathemes/sections/section section=theme_settings.section1 index=1}}
+        {{{region name="home_below_section1"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section2 index=2}}
+        {{{region name="home_below_section2"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section3 index=3}}
+        {{{region name="home_below_section3"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section4 index=4}}
+        {{{region name="home_below_section4"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section5 index=5}}
+        {{{region name="home_below_section5"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section6 index=6}}
+        {{{region name="home_below_section6"}}}
+        {{> components/papathemes/sections/section section=theme_settings.section7 index=7}}
+        {{{region name="home_below_section7"}}}
+    </div>
+{{/partial}}
+{{#and theme_settings.instantload is_ajax}}
+    {{> layout/instantload-base}}
+{{else}}
+    {{> layout/base}}
+{{/and}}

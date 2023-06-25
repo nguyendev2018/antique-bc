@@ -1,0 +1,273 @@
+.footer {
+    .socialLinks {
+        .socialLinks-item {
+            margin-right: 0;
+        }
+
+        .icon {
+            width: spacing("half") + remCalc(30px);
+            padding: spacing("quarter");
+        }
+    }
+
+    .footer-below {
+        background-color: stencilColor("copyright-backgroundColor");
+
+        .footer-border {
+            border-top: 1px solid rgba(stencilColor("copyright-color"), 0.2);
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+
+            @media (max-width: screenSize("medium") - 1px) {
+                flex-direction: column-reverse;
+            }
+        }
+    }
+}
+
+.footer-info-list {
+    @media (max-width: screenSize("medium") - 1px) {
+        margin-left: spacing("single");
+    }
+}
+
+.footer-info-list._collapsible {
+    @media (max-width: screenSize("medium") - 1px) {
+        &:not(.is-open) {
+            display: none;
+        }
+    }
+}
+
+.footer-info-list._iconList {
+    @media (max-width: screenSize("medium") - 1px) {
+        margin-left: 0;
+    }
+
+    li {
+        margin-left: spacing("single");
+        position: relative;
+    }
+
+    .icon {
+        @include square(16px);
+        fill: stencilColor("footer-linkColor-hover");
+        position: absolute;
+        left: -(spacing("single"));
+        top: spacing("eighth");
+    }
+}
+
+.footer-info-col {
+    @media (max-width: screenSize("medium") - 1px) {
+        margin-bottom: 0;
+    }
+}
+
+.footer-info-col--about {
+    @media (max-width: screenSize("medium") - 1px) {
+        border-bottom: 1px solid rgba(stencilColor("footer-color"), 0.2);
+        padding-bottom: spacing("single");
+        margin-bottom: spacing("single");
+    }
+
+    .footer-info-list {
+        column-count: 1;
+    }
+}
+
+.footer-info-heading {
+    font-weight: $header-font-weight;
+    margin-bottom: spacing("single");
+
+    .icon {
+        @include square(16px);
+        fill: stencilColor("footer-headingColor");
+        vertical-align: baseline;
+        @include breakpoint("medium") {
+            display: none;
+        }
+    }
+
+    a {
+        color: inherit;
+        word-wrap: break-word;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: inherit;
+
+            .icon {
+                fill: stencilColor("footer-headingColor");
+            }
+        }
+    }
+
+    [data-collapsible]:not(.is-open) {
+        .icon--close {
+            display: none;
+        }
+    }
+
+    [data-collapsible].is-open {
+        .icon--open {
+            display: none;
+        }
+    }
+}
+
+.footer-logo-image-container {
+    position: relative;
+    margin: 0;
+    @if stencilString("logo_size") != "original" {
+        max-width: get-width(stencilString("logo_size"));
+    }
+}
+
+.footer-logo-image-container::after {
+    content: "";
+    display: block;
+}
+
+.footer-logo-image {
+    @include lazy-loaded-img;
+    right: unset;
+}
+
+.beautify__footerIcons {
+    padding-top: spacing("single");
+    margin-left: auto;
+    margin-right: 0;
+    @include breakpoint("medium") {
+        padding-top: 0;
+    }
+}
+
+.footer-payments {
+    padding: spacing("single") 0;
+
+    .container {
+        flex-direction: column;
+        margin: 0;
+        justify-content: flex-end;
+
+        @include breakpoint("medium") {
+            display: flex;
+            gap: 0 spacing("single");
+        }
+    }
+
+    .footer-info-heading {
+        @include breakpoint("medium") {
+            margin-bottom: 0;
+        }
+    }
+
+    .footer-payment-icons {
+        .footer-payment-icon {
+            margin: 0 0 0 remCalc(10);
+        }
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        row-gap: spacing("quarter");
+    }
+
+    @media (max-width: screenSize("medium") - 1px) {
+        padding-top: 0;
+
+        .footer-payment-icons {
+            .footer-payment-icon {
+                margin: 0 spacing("quarter") 0 0;
+            }
+        }
+    }
+}
+
+.beautify__abovePoweredBy {
+    ._flex {
+        display: flex;
+        flex-direction: column;
+        @include breakpoint("medium") {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        ._logos {
+            padding: spacing("single") 0;
+            display: flex;
+            gap: spacing("half");
+
+            img {
+                margin-right: spacing("half");
+            }
+        }
+
+        ._links {
+            padding: spacing("single") 0;
+            border-top: 1px solid rgba(stencilColor("copyright-color"), 0.2);
+            @include breakpoint("medium") {
+                margin-left: auto;
+                margin-right: 0;
+                border-top: 0;
+            }
+        }
+    }
+}
+
+#consent-manager {
+    > div {
+        background-color: stencilColor("copyright-backgroundColor");
+        padding: 0 spacing("half");
+
+        > div {
+            background-color: stencilColor("copyright-backgroundColor");
+            padding: 0 0 spacing("single");
+            @include breakpoint("medium") {
+                @include beautify__container;    
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            > div {
+                margin-top: 0 !important;
+                border-top: 1px solid rgba(stencilColor("copyright-color"), 0.2);
+                align-items: center !important;
+
+                > div:first-child {
+                    @include breakpoint("medium") {
+                        margin-top: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        margin: 0 spacing("half") spacing("half") 0;
+    }
+}
+
+#consent-manager-update-banner {
+    background-color: stencilColor("copyright-backgroundColor") !important;
+    padding: 0 spacing("half") spacing("single");
+    position: static !important;
+    line-height: lineHeight("base") !important;
+    height: auto !important;
+
+    > a {
+        display: block;
+        padding: spacing("half") 0 spacing("single");
+        margin: 0 auto !important;
+        @include breakpoint("medium") {
+            @include beautify__container;    
+        }
+    }
+}

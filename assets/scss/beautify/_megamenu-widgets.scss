@@ -1,0 +1,139 @@
+// Widgets in Menu
+// -----------------------------------------------------------------------------
+
+// When editing mode is active
+.editing-menu-widgets {
+    @include breakpoint("medium") {
+        .header {
+            position: static !important;
+        }
+
+        .navPages._hasWidgets {
+            .navPages-list:not(.navPages-list--user) {
+                width: 100%;
+
+                > .navPages-item {
+                    display: block !important;
+
+                    > .navPages-action::before {
+                        display: none;
+                    }
+                }
+
+                .navPage-subMenu {
+                    position: static !important;
+                    transform: none !important;
+                    display: block !important;
+                }
+            }
+        }
+
+        .navPages-action-toggle-desktop {
+            display: none !important;
+        }
+
+        .stickyHeader-placeholder {
+            display: none !important;
+        }
+    }
+}
+// .navPages-container{
+//     .container{
+//         overflow: hidden;
+//     }
+//     &:hover{
+//         .container{
+//             overflow: visible;
+//         }
+//     }
+// }
+
+// Widgets in mega menu is enabled
+.navPages._hasWidgets,
+.navPages._hasMegamenu {
+    @include breakpoint("medium") {
+        .navPage-subMenu {
+            background-color: stencilColor("navPages-subMenu-backgroundColor");
+            box-shadow: 0 3px 5px rgba(color("blacks"), 0.1);
+            border-radius: $container-border-radius;
+            border: 5px solid stencilColor("navPages-subMenu-separatorColor");
+            padding: 0;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translate(-50%, 15px);
+            z-index: 1;
+            left: -100vw;
+
+            &.is-open {
+                pointer-events: unset;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .navPages-item:not(.navPages-item--page):hover {
+            .navPage-subMenu {
+                pointer-events: unset;
+                opacity: 1;
+                visibility: visible;
+                transform: translate(-50%, 0);
+                z-index: zIndex("high");
+                left: 50%;
+            }
+        }
+
+        .navPages-item:not(.navPages-item--page):not(:hover) {
+            .navPage-subMenu {
+                transition: opacity 0.2s, visibility 0.2s, transform 0.2s, left 0.2s 0.2s linear;
+            }
+        }
+
+        .navPage-subMenu-middle {
+            display: flex;
+            padding: spacing("half") spacing("single");
+
+            > [data-content-region]:not(:has([data-sub-layout-container])) {
+                max-width: 20%;
+            }
+
+            > [data-content-region]:has([data-sub-layout-container]) {
+                width: 20%;
+            }
+        }
+
+        .navPage-subMenu-list {
+            flex: 1 1 auto;
+            background-color: transparent;
+            box-shadow: 0;
+            border-radius: 0;
+            border: 0;
+            padding: 0 spacing("single");
+
+            [data-content-region] {
+                max-width: 100%;
+            }
+        }
+
+        .navPage-subMenu-bottom {
+            border-bottom-left-radius: $container-border-radius;
+            overflow: hidden;
+        }
+    }
+
+    @media (max-width: (screenSize("medium") - 1px)) {
+        .navPage-subMenu {
+            [data-content-region] {
+                display: none;
+            }
+            height: 0;
+        }
+    }
+}
+
+// Widgets in mega menu is disabled, hide all widget regions
+.navPages:not(._hasWidgets) {
+    [data-content-region] {
+        display: none;
+    }
+}

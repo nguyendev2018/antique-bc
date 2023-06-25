@@ -1,0 +1,76 @@
+<div class="beautify__section beautify__recentBlog {{#if index}}beautify__section--index{{index}}{{/if}}">
+    <div class="container">
+        {{#if theme_settings.homepage_blog_heading}}
+            <h2 class="page-heading">{{theme_settings.homepage_blog_heading}}</h2>
+        {{else}}
+            <h2 class="page-heading is-srOnly">{{lang 'blog.recent_posts'}}</h2>
+        {{/if}}
+        <div class="_list">
+            <div class="blogCarousel"
+                data-slick='{
+                    "mobileFirst": true,
+                    "slidesToShow": 1,
+                    "slidesToScroll": 1,
+                    "autoplay": false,
+                    "autoplaySpeed": {{carousel.swap_frequency}},
+                    "arrows": false,
+                    "dots" : true , 
+                    "responsive": [
+                        {
+                            "breakpoint": 1280,
+                            "settings": {
+                                "slidesToScroll": 3,
+                                "slidesToShow": 3,
+                                "arrows": true , 
+                                "dots" : false
+                            }
+                        },
+                        {
+                            "breakpoint": 800,
+                            "settings": {
+                                "slidesToScroll": 2,
+                                "slidesToShow": 2,
+                                "arrows": false
+                            }
+                        }
+                    ]
+                }'
+            >
+                {{#each posts}}
+                    <div class="_item">
+                        <article class="_blog">
+                            {{#if thumbnail}}
+                                <div class="_blog-post-figure">
+                                    <figure class="_blog-thumbnail">
+                                        <a data-instantload href="{{url}}">
+                                            {{> components/common/responsive-img
+                                                image=thumbnail
+                                                fallback_size=theme_settings.blog_size
+                                                lazyload=theme_settings.lazyload_mode
+                                            }}
+                                        </a>
+                                    </figure>
+                                </div>
+                            {{/if}}
+                            <div class="_blog-post-body">
+                                <div class="_blog-date">{{#if author}}<span class="_blog-date-author"><span class="_blog-author-text">{{lang 'blog.posted_by' name=author}}</span></span>{{/if}} <span class="_blog-date-date">{{date_published}}</span></div>
+                                <header class="_blog-header">
+                                    <h3 class="_blog-title">
+                                        <a data-instantload href="{{url}}">{{title}}</a>
+                                    </h3>
+                                </header>
+                                <div class="_blog-post">
+                                    <p>{{{sanitize summary}}}...</p>
+                                    <div class="_blog-readmore"><a class="button button--small button--outline" data-instantload href="{{url}}">{{lang 'blog.read_more'}} </a></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="_more">
+            <a href="{{blog.url}}">{{lang 'blog.read_more_articles'}}</a>
+        </div>
+    </div>
+</div>

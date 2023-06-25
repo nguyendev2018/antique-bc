@@ -1,0 +1,134 @@
+.quickSearchResults-more {
+    margin: spacing("half") 0; // papathemes-beautify edited
+    text-align: center;
+
+    .button {
+        margin-bottom: 0;
+    }
+}
+
+.quickSearchSuggestions {
+    padding: 0 spacing("half");
+
+    @include breakpoint("medium") {
+        padding: 0;
+    }
+
+    .button--link {
+        margin: 0;
+        padding: 0;
+        color: $color-textSecondary;
+        text-decoration: none;
+
+        .icon {
+            width: fontSize("base") * 0.9;
+            height: fontSize("base") * 0.9;
+            fill: $color-textSecondary;
+            margin-left: spacing("quarter");
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $color-textLink;
+
+            .icon {
+                fill: $color-textLink;
+            }
+        }
+    }
+
+    .button {
+        .on,
+        .off {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .button[data-collapsible] {
+        &:not(.is-open) {
+            .on {
+                display: none;
+            }
+        }
+
+        &.is-open {
+            .off {
+                display: none;
+            }
+        }
+    }
+
+    ._popular,
+    ._recent {
+        display: grid;
+        grid-template:
+            "heading action"
+            "search search" / auto max-content;
+        padding: spacing("half") 0 0;
+
+        @include breakpoint("medium") {
+            padding: spacing("single") 0 0;
+        }
+    }
+
+    ._popular + ._recent {
+        @include breakpoint("medium") {
+            padding-top: spacing("half");
+        }
+    }
+
+    ._heading {
+        font-weight: fontWeight("bold");
+
+        @include breakpoint("medium") {
+            margin: 0;
+        }
+    }
+
+    ul {
+        display: block;
+        list-style: none;
+        margin: spacing("half") 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: spacing("half");
+
+        @include breakpoint("medium") {
+            gap: spacing("single");
+        }
+    }
+
+    #quickSearch-popular-list:not(.is-open) {
+        display: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: $color-textSecondary;
+        padding: spacing("quarter") spacing("half");
+        background-color: container("fill", "dark");
+        border-radius: $button-radius;
+
+        &:hover,
+        &:focus {
+            color: $color-textLink;
+
+            .icon {
+                fill: $color-textLink;
+            }
+        }
+
+        .icon {
+            width: fontSize("base") * 0.9;
+            height: fontSize("base") * 0.9;
+            fill: $color-textSecondary;
+            margin-right: spacing("eighth");
+
+            @include breakpoint("medium") {
+                margin-right: spacing("quarter");
+            }
+        }
+    }
+}

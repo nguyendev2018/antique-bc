@@ -1,0 +1,148 @@
+<ul class="previewCartList" data-cart-quantity="{{cart.quantity}}">
+    {{#each cart.items}}
+        <li class="previewCartItem" data-cart-itemid="{{id}}">
+            <div class="previewCartItem-image">
+                {{#if type '==' 'GiftCertificate'}}
+                    <img src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
+                {{else}}
+                    {{> components/common/responsive-img
+                        image=image
+                        fallback_size=../../theme_settings.productthumb_size
+                        lazyload=../../theme_settings.lazyload_mode
+                        default_image=../../theme_settings.default_image_product
+                    }}
+                {{/if}}
+            </div>
+
+            <div class="previewCartItem-content">
+                <h6 class="previewCartItem-name">
+                    <a href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
+                </h6>
+
+                {{!-- inhealth: hide brand
+                <span class="previewCartItem-brand">
+                    {{brand.name}}
+                </span>
+                --}}
+
+                {{!-- beautify hide SKU
+                {{#if sku}}
+                    <dl class="definitionList definitionList--previewCartItem">
+                        <dt class="definitionList-key">{{lang 'products.sku'}}</dt>
+                        <dd class="definitionList-value">{{sku}}</dd>
+                    </dl>
+                {{/if}}
+                --}}
+
+                {{#if release_date}}
+                    <p class="previewCartItem-releaseDate">({{release_date}})</p>
+                {{/if}}
+
+                {{#if configurable_fields}}
+                    <dl class="definitionList definitionList--previewCartItem">
+                        {{#each configurable_fields}}
+                            <dt class="definitionList-key">{{name}}:</dt>
+                            <dd class="definitionList-value">
+                                {{#if is_file}}
+                                    <a href="/viewfile.php?prodfield={{../id}}&cartitem={{../../id}}">{{value}}</a>
+                                {{else}}
+                                    {{> components/common/product-options}}
+                                {{/if}}
+                            </dd>
+                        {{/each}}
+                    </dl>
+                {{/if}}
+
+                {{#if options}}
+                    <dl class="definitionList definitionList--previewCartItem">
+                        {{#each options}}
+                            <dt class="definitionList-key">{{name}}:</dt>
+                            <dd class="definitionList-value">
+                                {{#if is_file}}
+                                    <a href="/viewfile.php?attributeId={{../id}}&cartitem={{../../id}}">{{value}}</a>
+                                {{else}}
+                                    {{> components/common/product-options}}
+                                {{/if}}
+                            </dd>
+                        {{/each}}
+                    </dl>
+                {{/if}}
+
+                {{#or options configurable_fields}}
+                    <a class="_editLink" href="#" data-item-edit="{{id}}">{{lang 'cart.checkout.change'}}</a>
+                {{/or}}
+
+                {{#if type '==' 'GiftCertificate'}}
+                    <a href="{{edit_url}}">{{lang 'cart.checkout.change'}}</a>
+                {{/if}}
+                {{> components/cart/item-giftwrap this}}
+                {{#if event_date}}
+                    <dl class="cart-item-options">
+                        <dt class="cart-item-option-title">
+                            {{event_date.name}}
+                        </dt>
+
+                        <dd class="cart-item-option-description">
+                            {{event_date.date}}
+                        </dd>
+                    </dl>
+                {{/if}}
+
+                <span class="previewCartItem-price">
+                    {{#if quantity '>' 1}}
+                        {{quantity}} &times;
+                    {{/if}}
+                    {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
+                        <span class="price {{#if price_discounted}}price--discounted{{/if}}">{{price.formatted}}</span>
+                        {{#if price_discounted}}
+                            <span class="price">{{price_discounted.formatted}}</span>
+                        {{/if}}
+                    {{else}}
+                        {{> components/common/login-for-pricing}}
+                    {{/or}}
+                </span>
+
+                <div class="previewCartItem-qtyRemoveRow">
+                    <div class="previewCartItem-quantity">
+                        <label class="form-label cart-item-label" for="cartpopup-qty-{{id}}">{{lang 'products.quantity'}}</label>
+                        <div class="form-increment">
+                            {{#if can_modify}}
+                                <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="dec">
+                                    <span class="is-srOnly">{{lang 'products.quantity_decrease' name=name}}</span>
+                                    <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-minus" /></svg></i>
+                                </button>
+                            {{/if}}
+                            <input class="form-input form-input--incrementTotal"
+                                   id="cartpopup-qty-{{id}}"
+                                   name="qty-{{id}}"
+                                   type="tel"
+                                   value="{{quantity}}"
+                                   data-quantity-min="{{min_purchase_quantity}}"
+                                   data-quantity-max="{{max_purchase_quantity}}"
+                                   data-quantity-min-error="{{lang 'products.quantity_min' quantity=min_purchase_quantity}}"
+                                   data-quantity-max-error="{{lang 'products.quantity_max' quantity=max_purchase_quantity}}"
+                                   min="1"
+                                   pattern="[0-9]*"
+                                   aria-label="{{name}}"
+                                   aria-live="polite"{{#unless can_modify}} disabled{{/unless}}>
+                            {{#if can_modify}}
+                                <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="inc">
+                                    <span class="is-srOnly">{{lang 'products.quantity_increase' name=name}}</span>
+                                    <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-add" /></svg></i>
+                                </button>
+                            {{/if}}
+                        </div>
+                    </div>
+    
+                    {{#if can_modify}}
+                        <span class="previewCartItem-remove">
+                            <a class="previewCartItem-remove-icon" title="{{lang 'cart.remove'}}" data-cart-remove data-cart-itemid="{{id}}" href="#" data-confirm-delete="{{lang 'cart.confirm_delete'}}" aria-autoclose="false">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-close" /></svg>
+                            </a>
+                        </span>
+                    {{/if}}
+                </div>
+            </div>
+        </li>
+    {{/each}}
+</ul>

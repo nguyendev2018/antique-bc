@@ -1,0 +1,106 @@
+<div class="previewCart" data-cart-quantity="{{cart.quantity}}">
+    <div class="loadingOverlay"></div>
+    <div class="_header">
+        <a href="#" class="_close is-open" data-toggle="cart-preview-dropdown"><svg class="icon"><use xlink:href="#icon-close"></use></svg><span class="sr-only">{{lang 'common.close'}}</span></a>
+        {{> components/papathemes/cart-popup/page-title}}
+        <div data-papathemes-cart-popup-status>
+            {{> components/papathemes/cart-popup/status-messages}}
+            {{#if in_development}}
+                <div class="_statusMsg">
+                    <div class="alertBox alertBox--info">
+                        <div class="alertBox-column alertBox-message">
+                            📦 Free shipping over 59 Euro - Code: IRISH
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="_body">
+        {{#if cart.items.length}}
+            <div data-papathemes-cart-popup-content>
+                {{> components/papathemes/cart-popup/content}}
+            </div>
+            <div class="_cartSuggested" data-cart-suggested-products>
+                <h3 class="_subheading">{{theme_settings.product_cartsuggested_heading}}</h3>
+                <section class="productCarousel"
+                    data-list-name="Cart Suggested Products"
+                    data-slick='{
+                        "dots": false,
+                        "arrows": true,
+                        "infinite": true,
+                        "rows": 2,
+                        "slidesPerRow": 1,
+                        "slidesToShow": 1,
+                        "slidesToScroll": 1,
+                        "touchThreshold": 10,
+                        "autoplay": true,
+                        "autoplaySpeed": 3000
+                    }'
+                >
+                    {{#for 1 2}}
+                        <div class="productCarousel-slide">
+                            {{> components/products/card-placeholder settings=../settings show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
+                        </div>
+                    {{/for}}
+                </section>
+            </div>
+            <div class="_recentlyViewed" data-recently-viewed-products-section>
+                <h3 class="_subheading">{{theme_settings.product_recentviewed_heading}}</h3>
+                <section class="productCarousel"
+                    data-list-name="Recently Viewed Products"
+                    data-slick='{
+                        "dots": false,
+                        "arrows": true,
+                        "infinite": true,
+                        "rows": 2,
+                        "slidesPerRow": 1,
+                        "slidesToShow": 1,
+                        "slidesToScroll": 1,
+                        "touchThreshold": 10,
+                        "autoplay": false,
+                        "autoplaySpeed": 3000
+                    }'
+                >
+                    {{#for 1 2}}
+                        <div class="productCarousel-slide">
+                            {{> components/products/card-placeholder settings=../settings show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
+                        </div>
+                    {{/for}}
+                </section>
+            </div>
+        {{else}}
+            <div class="previewCart-emptyBody">
+                {{lang 'cart.checkout.empty_cart'}}
+            </div>
+        {{/if}}
+    </div>
+    {{#if cart.items.length}}
+        <div class="_footer">
+            <div class="previewCartAction">
+                <div data-papathemes-cart-popup-totals>
+                    {{> components/papathemes/cart-popup/totals}}
+                </div>
+
+                {{#if cart.show_primary_checkout_button}}
+                    <div class="previewCartAction-checkout">
+                        <a href="{{urls.checkout.single_address}}" class="button button--primary">
+                            <svg class="icon"><use xlink:href="#icon-lock"></use></svg>{{lang 'cart.preview.checkout_now'}}
+                        </a>
+                    </div>
+                {{/if}}
+
+                {{#if cart.show_multiple_address_shipping}}
+                    <div class="previewCartAction-checkoutMultiple">
+                        <a href="{{urls.checkout.multiple_address}}">
+                            {{lang 'cart.preview.checkout_multiple'}}
+                        </a>
+                    </div>
+                {{/if}}
+            </div>
+            <div data-papathemes-cart-popup-additional-checkout-buttons>
+                {{> components/papathemes/cart-popup/additional-checkout-buttons}}
+            </div>
+        </div>
+    {{/if}}
+</div>

@@ -1,0 +1,104 @@
+// Color Swatches on Product Card
+// ----------------------------------------------------------------------------
+.card-figure.loading {
+    position: relative;
+
+    &::after {
+        content: "";
+        // background: rgba(255,255,255,0.7) url(../img/loading-18.gif) no-repeat center center; // papathemes-kansha disable to fix 404 error
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.card-text--colorswatches {
+    clear: both;
+    font-size: 0;
+    line-height: 1.6;
+    min-height: to-number(get-height(stencilString("card_swatch_option_size"))) + 6px;
+    // background: url(../img/loading-40.gif) no-repeat center center; // papathemes-kansha disable to fix 404 error
+
+    &.loaded,
+    .productSwatchesLoaded & {
+        background: none;
+    }
+}
+
+.productSwatches-swatches {
+    margin: 0 auto;
+    display: inline-flex;
+    justify-content: flex-start;
+    max-width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.productSwatches-swatches-item {
+    margin: 1px;
+    display: flex;
+    border: 1px solid rgba($input-border-color, 0.3);
+    padding: 1px;
+    border-radius: $global-radius;
+
+    &:focus,
+    &:hover {
+        border-color: $input-border-color;
+        color: stencilColor("color-textLink");
+    }
+
+    &.is-active {
+        border-color: stencilColor("checkRadio-color");
+    }
+
+    .form-option-variant--color,
+    .form-option-variant--pattern {
+        width: get-width(stencilString("card_swatch_option_size"));
+        height: get-height(stencilString("card_swatch_option_size"));
+        padding: 0;
+        background-size: contain;
+        border-radius: $global-radius;
+    }
+}
+
+.card-figure:not(:hover):not(:focus):not(:active) .card-img-container--slider .productSwatches-image-optionChanged {
+    left: 0;
+    right: 0;
+    opacity: 1;
+
+    ~ .card-image {
+        opacity: 0;
+    }
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+    .card-img-container:not(.card-img-container--slider) .productSwatches-image-optionChanged ~ .card-image {
+        opacity: 0;
+    }
+}
+
+button.productSwatches-swatches-more,
+button.productSwatches-swatches-less {
+    border: 0;
+    background: none;
+    color: $color-textLink;
+    height: auto;
+    padding: 0;
+    display: inline;
+    font-size: fontSize("smallest");
+    margin-left: spacing("quarter");
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}

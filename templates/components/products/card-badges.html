@@ -1,0 +1,35 @@
+{{#or price.non_sale_price_with_tax price.non_sale_price_without_tax}}
+    {{#if theme_settings.product_sale_badges '===' 'label'}}
+        <div class="sale-flag-side">
+            <span class="sale-text">{{theme_settings.product_sale_label}}</span>
+        </div>
+    {{else if theme_settings.product_sale_badges '===' 'percent'}}
+        <div class="sale-flag-side _percent">
+            <span class="sale-text">
+                {{#replace '{percent}' theme_settings.product_sale_label}}
+                    {{#if price.non_sale_price_without_tax}}
+                        {{round (multiply (subtract 1 (divide price.without_tax.value price.non_sale_price_without_tax.value)) 100)}}%
+                    {{else}}
+                        {{round (multiply (subtract 1 (divide price.with_tax.value price.non_sale_price_with_tax.value)) 100)}}%
+                    {{/if}}
+                {{else}}
+                    {{theme_settings.product_sale_label}}
+                    <span>
+                        {{#if price.non_sale_price_without_tax}}
+                            {{round (multiply (subtract 1 (divide price.without_tax.value price.non_sale_price_without_tax.value)) 100)}}%
+                        {{else}}
+                            {{round (multiply (subtract 1 (divide price.with_tax.value price.non_sale_price_with_tax.value)) 100)}}%
+                        {{/if}}
+                    </span>
+                {{/replace}}
+            </span>
+        </div>
+    {{/if}}
+{{/or}}
+{{#if theme_settings.product_custom_badges}}
+    {{#filter custom_fields '__badge' property='name'}}
+        <div class="sale-flag-side sale-flag-side--custom">
+            <span class="sale-text">{{{value}}}</span>
+        </div>
+    {{/filter}}
+{{/if}}

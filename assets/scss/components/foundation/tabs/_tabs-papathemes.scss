@@ -1,0 +1,30 @@
+.tab {
+    // mooncat edited
+    border-top-left-radius: $button-radius;
+    border-top-right-radius: $button-radius;
+}
+
+.tab-title {
+    font-weight: $header-font-weight;
+    color: $color-textSecondary; // papathemes-kansha edited
+    font-weight: $body-font-weight;
+
+    &:hover,
+    &:focus {
+        color: stencilColor("color-textLink"); // papathemes-kansha edited
+        text-decoration: underline;
+    }
+}
+
+.tabs--alt {
+    .tab-title {
+        text-transform: uppercase;
+    }
+}
+
+
+.tab-content {
+    .productReview {
+        width: 100%;
+    }
+}

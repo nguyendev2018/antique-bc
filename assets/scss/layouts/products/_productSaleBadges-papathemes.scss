@@ -1,0 +1,90 @@
+.sale-flag-side {
+    font-weight: fontWeight("medium"); // papathemes-beautify added
+    
+    // papathemes-beautify customized
+    @include breakpoint("medium") {
+        $y: 0;
+        $h: remCalc(fontSize("smallest") * 1.25 + 5px) + 2 * spacing("third"); // papathemes-kansha edited
+        font-size: fontSize("smallest"); // papathemes-kansha edited
+    
+        top: $y;
+    
+        + .sale-flag-side {
+            top: $y + $h;
+        }
+    
+        + .sale-flag-side + .sale-flag-side {
+            top: $y + $h * 2;
+        }
+    
+        + .sale-flag-side + .sale-flag-side + .sale-flag-side {
+            top: $y + $h * 3;
+        }
+    }
+    @media (max-width: screenSize("medium") - 1px) {
+        $y: 0;
+        $h: remCalc(fontSize("smallest") * 1.25 + 5px) + 2 * spacing("quarter");
+        padding: spacing("quarter") spacing("half");
+        font-size: fontSize("smallest");
+
+        top: $y;
+
+        + .sale-flag-side {
+            top: $y + $h;
+        }
+
+        + .sale-flag-side + .sale-flag-side {
+            top: $y + $h * 2;
+        }
+
+        + .sale-flag-side + .sale-flag-side + .sale-flag-side {
+            top: $y + $h * 3;
+        }
+    }
+
+    $h: spacing("half") + 0.125rem;
+    margin: 0;
+    font-size: fontSize("smallest");
+    padding: spacing("third") spacing("half");
+    border-top-left-radius: stencilNumber("card_border_radius");
+    border-end-end-radius: stencilNumber("card_border_radius");
+    background-color: stencilColor("color_badge_product_sale_badges");
+
+    .sale-text span {
+        font-size: fontSize("smallest");
+        vertical-align: auto;
+        margin-left: spacing("eighth");
+    }
+}
+
+.sale-flag-side--custom {
+    background-color: stencilColor("color_badge_product_custom_badges");
+    color: stencilColor("color_text_product_custom_badges");
+
+    .product:hover & {
+        background-color: stencilColor("color_badge_product_custom_badges");
+    }
+}
+
+
+.sale-flag-star,
+.sale-flag-star::before,
+.sale-flag-star::after {
+    left: auto;
+    right: 0;
+}
+
+.starwrap {
+    right: spacing("base") + remCalc(10px);
+}
+
+.sale-text-burst {
+    font-size: fontSize("smallest");
+}
+
+.sale-flag-sash {
+    left: auto;
+    right: spacing("base") - remCalc(35px);
+    transform: rotate(45deg);
+    font-size: fontSize("smallest");
+}

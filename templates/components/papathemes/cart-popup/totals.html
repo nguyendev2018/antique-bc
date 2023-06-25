@@ -1,0 +1,15 @@
+<ul class="previewCartAction-totals">
+    <li class="cart-total cart-total--subtotal">
+        <div class="cart-total-label">
+            {{lang 'cart.checkout.subtotal'}}
+            <span class="cart-total-label--dots">:</span>
+        </div>
+        <div class="cart-total-value">
+            {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                <span>{{cart.sub_total.formatted}}</span>
+            {{else}}
+                {{> components/common/login-for-pricing}}
+            {{/or}}
+        </div>
+    </li>
+</ul>

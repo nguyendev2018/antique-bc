@@ -1,0 +1,43 @@
+<nav>
+    {{#unless (getVar 'hideSubcategoriesSidebar')}}
+    {{#if category.subcategories}}
+    <div class="sidebarBlock sidebarBlock--categories sidebarBlock--mobileCollapsible">
+        <h3 class="sidebarBlock-heading is-open" data-collapsible="#categories-navList" tabindex="0" aria-expanded="true">
+            {{lang 'category.label'}}
+            <svg class="icon _accordion-indicator toggleLink-text toggleLink-text--off">
+                <use xlink:href="#icon-add" />
+            </svg>
+            <svg class="icon _accordion-indicator toggleLink-text toggleLink-text--on">
+                <use xlink:href="#icon-minus" />
+            </svg>
+        </h3>
+        <ul id="categories-navList" class="beautify__navList is-open" aria-hidden="false">
+            {{#each category.subcategories}}
+            <li class="navList-item">
+                <a class="navList-action" data-instantload href="{{url}}" title="{{name}}">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+    {{/unless}}
+
+    {{#if category.faceted_search_enabled}}
+        {{> components/faceted-search/index
+            category
+            collapsed=collapsed
+            layout=theme_settings.categorypage_layout
+            currency_token=settings.money.currency_token
+            show_price_slider=(if theme_settings.show_shop_by_price '==' 'slider')
+        }}
+    {{else}}
+        {{#if theme_settings.show_shop_by_price '!=' 'hide'}}
+            {{> components/category/shop-by-price shop_by_price=category.shop_by_price category_url=category.url}}
+        {{/if}}
+        {{#if shop_by_brand}}
+            {{#if theme_settings.sidebar_shop_by_brand '>' 9}}
+                {{> components/supermarket/sidebar/brands}}
+            {{/if}}
+        {{/if}}
+    {{/if}}
+</nav>

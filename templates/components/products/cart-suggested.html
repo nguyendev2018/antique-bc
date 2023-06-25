@@ -1,0 +1,27 @@
+<div class="papathemes-cartSuggestedProducts" data-cart-suggested-products>
+    {{#unless hide_heading}}
+    <h2 class="page-heading">{{theme_settings.product_cartsuggested_heading}}</h2>
+    {{/unless}}
+
+    {{#if region_name}}
+        {{{region name=region_name}}}
+    {{/if}}
+
+    {{#if display_type '==' 'carousel'}}
+        {{> components/products/carousel is_placeholder=true}}
+    {{else}}
+        <ul class="productGrid productGrid--responsiveCol" {{#if settings.data_tag_enabled}} data-list-name="Cart Suggested Products" {{/if}}>
+            {{#for 1 theme_settings.product_col}}
+                <li class="product">
+                    {{> components/products/card-placeholder
+                        show_compare=../show_compare
+                        show_rating=../settings.show_product_rating
+                        settings=../settings
+                        theme_settings=../theme_settings
+                        customer=../customer
+                        event="list" position=(add @index 1)}}
+                </li>
+            {{/for}}
+        </ul>
+    {{/if}}
+</div>

@@ -1,0 +1,8 @@
+[data-layout-name="TOP CATEGORIES"] {
+    background-color: $header-bg; // mặc định là màu bg của header, người dùng có thể overwrite bằng màu layout trong page builder
+    color: $color-secondary; // white
+
+    .beautify__calloutIcons {
+        // TODO: Popular Categories Section #12
+    }
+}

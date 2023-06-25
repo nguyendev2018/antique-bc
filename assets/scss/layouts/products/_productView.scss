@@ -1,0 +1,100 @@
+// =============================================================================
+// PRODUCT VIEW (CSS)
+// =============================================================================
+// Product view layout
+// -----------------------------------------------------------------------------
+
+.productView {
+    @include grid-row($behavior: "nest");
+    margin-left: -(spacing("base"));
+    margin-right: -(spacing("base"));
+
+    .modal & {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+
+.productView--quickView {
+    .socialLinks-item--print {
+        display: none;
+    }
+
+    .productView-images {
+        padding-right: spacing("base");
+    }
+
+    .productView-details {
+        padding: spacing("single") spacing("half");
+
+        &:has(.form-wishlist) {
+            padding-bottom: 0;
+        }
+    }
+
+    .productView-descriptionWrapper {
+        .productView-description {
+            .tabs {
+                &:has(.tab:nth-child(7)) {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    overflow: auto;
+                    -webkit-overflow-scrolling: touch;
+                    justify-content: flex-start;
+
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                }
+            }
+
+            .tab-content {
+                padding-left: spacing("double");
+                padding-right: spacing("double");
+
+                &.is-active {
+                    margin-left: spacing("single");
+                    margin-right: spacing("single");
+                    justify-content: unset;
+                    display: block;
+                }
+            }
+
+            .tab-content--custom {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+
+    .productView-options .form-action--addToCart {
+        margin-bottom: 0;
+    }
+}
+
+.productView-images {
+    @include grid-column(12);
+    padding-left: spacing("base");
+    padding-right: spacing("base");
+
+    @include breakpoint("medium") {
+        width: grid-calc(6, $total-columns);
+    }
+}
+
+.productView-details {
+    @include grid-column(12);
+    padding-left: spacing("base");
+    padding-right: spacing("base");
+
+    @include breakpoint("medium") {
+        // clear: right;
+        // float: right;
+        width: grid-calc(6, $total-columns);
+    }
+}
+
+// papathemes-beautify edited
+.productView-description {
+    clear: both;
+}

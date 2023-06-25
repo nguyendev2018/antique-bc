@@ -1,0 +1,135 @@
+body.has-activeModal--newsletter {
+    overflow: auto;
+
+    .modal-background {
+        background-color: transparent;
+        transition: none;
+        visibility: hidden;
+    }
+}
+
+.modal--newsletter {
+    width: 700px;
+    box-shadow: 0 5px 15px 15px rgba(color("blacks"), 0.25);
+    transform: translateY(100vh);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: $container-border-radius;
+
+    &.open {
+        transform: translateY(-50%);
+    }
+}
+
+.newsletterPopup {
+    display: flex;
+    flex-direction: column;
+    background: stencilColor("color-primary");
+    border: 5px solid stencilColor("color-textLink");
+    border-radius: $container-border-radius;
+    color: stencilColor("color-secondary");
+    
+    .newsletterPopup_box {
+        p {
+            font-size: fontSize("base");
+            color: stencilColor("footer-secondary-color");
+            margin: 0 0 spacing("single");
+        }
+    }
+
+    @include breakpoint("small") {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.newsletterPopup-image {
+    order: 2;
+    text-align: center;
+
+    @include breakpoint("small") {
+        display: block;
+        order: 1;
+
+        &:has([data-layout-name]) {
+            width: 50%;
+        }
+    }
+}
+
+.newsletterPopup-content {
+    order: 1;
+    padding: spacing("double") spacing("single") spacing("single");
+
+    @include breakpoint("small") {
+        flex: 1;
+        order: 2;
+    }
+
+    @media (max-width: (screenSize("small") - 1px)) {
+        padding-top: spacing("single");
+    }
+}
+
+.newsletterPopup-heading {
+    font-size: fontSize("large");
+    font-weight: fontWeight("bold");
+    color: stencilColor("color-secondary");
+    margin: 0 0 spacing("base");
+}
+
+.newsletterPopup-description {
+    text-align: center;
+    margin-bottom: spacing("single");
+
+    @include breakpoint("small") {
+        text-align: left;
+    }
+}
+
+.newsletterPopup-form {
+    .form {
+        margin-bottom: 0;
+    }
+
+    .form-field {
+        margin-bottom: spacing("base");
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .form-prefixPostfix-button--postfix {
+        margin-left: 0;
+        margin-top: spacing("half");
+    }
+
+    input.button {
+        display: flex;
+        margin-top: spacing("base");
+        margin-bottom: spacing("single");
+
+        &:hover {
+            background-color: stencilColor("color-primaryLight");
+        }
+    }
+
+    .form-prefixPostfix {
+        .form-input {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .button {
+            width: 100%;
+        }
+    }
+
+    .button {
+        @include buttonVariant("primary");
+    }
+
+    .form-label {
+        color: stencilColor("color-secondary");
+    }
+}

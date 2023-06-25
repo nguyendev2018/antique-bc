@@ -1,0 +1,56 @@
+{{#unless hide_heading}}
+<h2 class="page-heading">{{theme_settings.product_featured_heading}}</h2>
+{{/unless}}
+
+{{#if show_categories}}
+    <div class="navProducts-rootMenu-list">
+        <ul class="navProducts-list">
+            {{#each categories}}
+            <li class="navProducts-item">
+                <a class="navPages-action" href="{{url}}?sort=featured" data-instantload>{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+
+{{#if region_name}}
+    {{{region name=region_name}}}
+{{/if}}
+
+{{#if display_type '==' 'carousel'}}
+    {{> components/products/carousel products=products list="Featured Products"}}
+{{else if display_type '==' 'grid'}}
+    <ul class="productGrid productGrid--responsiveCol" data-product-type="featured" {{#if settings.data_tag_enabled}} data-list-name="Featured Products"{{/if}}>
+        {{#each products}}
+            <li class="product" data-product-id="{{id}}">
+                {{>components/products/card 
+                    show_compare=../show_compare 
+                    show_rating=../settings.show_product_rating
+                    theme_settings=../theme_settings 
+                    settings=../settings 
+                    customer=../customer
+                    event="list" position=(add @index 1)}}
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <ul class="productList productList--responsiveCol" data-product-type="featured" {{#if settings.data_tag_enabled}} data-list-name="Featured Products"{{/if}}>
+        {{#each products}}
+            <li class="product" data-product-id="{{id}}">
+                {{>components/products/list-item 
+                	summary=false
+                	show_compare=../show_compare 
+                    show_rating=../settings.show_product_rating 
+                    theme_settings=../theme_settings 
+                    settings=../settings 
+                    customer=../customer
+                    event="list" position=(add @index 1)}}
+            </li>
+        {{/each}}
+    </ul>	
+{{/if}}
+
+{{#if view_all_link}}
+    <p class="_viewAll"><a class="button button--small button--outline" data-aos="fade-up" href="{{view_all_link}}">{{lang 'common.view_all_products'}}</a></p>
+{{/if}}

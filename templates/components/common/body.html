@@ -1,0 +1,30 @@
+<div class="body" data-currency-code="{{currency_selector.active_currency_code}}">
+    {{#if theme_settings.layout '===' 'left-sidebar'}}
+        <div class="container body-container">
+            <div class="body-sidebar">
+                {{> components/mooncat/category-tree}}
+                {{#block "page-sidebar"}} {{/block}}
+                {{{region name="page_sidebar"}}}
+                {{{region name="page_sidebar--global"}}}
+            </div>
+            <div class="body-content">
+                {{#block "hero"}} {{/block}}
+                {{#block "page"}} {{/block}}
+            </div>
+        </div>
+    {{else}}
+        {{#block "hero"}} {{/block}}
+        <div class="container">
+            {{#block "page"}} {{/block}}
+        </div>
+    {{/if}}
+
+    {{> components/common/modal}}
+    {{> components/common/alert-modal}}
+</div>
+
+<div class="scrollToTop">
+    <a href="#topOfPage" class="button button--white u-hiddenVisually" id="scrollToTopFloatingButton" title="{{lang 'common.top_of_page'}}">
+        <svg class="icon"><use xlink:href="#icon-keyboard-arrow-up"></use></svg>
+    </a>
+</div>

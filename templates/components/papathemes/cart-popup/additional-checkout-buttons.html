@@ -1,0 +1,10 @@
+{{#if cart.additional_checkout_buttons}}
+    <div class="previewCart-additionalCheckoutButtons">
+        <div class="_heading">{{lang 'cart.checkout.or'}}</div>
+        {{#each cart.additional_checkout_buttons}}
+            <div class="_item">
+                {{{this}}}
+            </div>
+        {{/each}}
+    </div>
+{{/if}}

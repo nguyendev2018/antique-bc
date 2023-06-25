@@ -1,0 +1,22 @@
+<div class="productView-alsoBought-item-inner">
+    <div class="productView-alsoBought-item-check">
+        <div class="form-field">
+            <input class="form-checkbox" type="checkbox" name="productView-alsoBought-item-checkbox" id="productView-alsoBought-item-checkbox-{{product.id}}" value="{{product.id}}" checked data-also-bought-checkbox>
+            <label class="form-label is-checked" for="productView-alsoBought-item-checkbox-{{product.id}}">
+                <div class="productView-alsoBought-item-image"><img class="lazyload" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage product.main_image 'alsobought_thumbnail_size' (cdn theme_settings.default_image_product)}}" alt="{{product.main_image.alt}}" title="{{product.main_image.alt}}"></div>
+                <div class="productView-alsoBought-item-title">{{product.title}}</div>
+                <div class="productView-alsoBought-item-price">
+                    {{#if product.call_for_price}}
+                        <span class="price--call">{{product.call_for_price}}</span>
+                    {{else}}
+                        {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
+                            {{> components/products/price price=product.price schema_org=false}}
+                        {{else}}
+                            {{> components/common/login-for-pricing}}
+                        {{/or}}
+                    {{/if}}
+                </div>
+            </label>
+        </div>
+    </div>
+</div>

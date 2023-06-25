@@ -1,0 +1,110 @@
+diff --git a/assets/js/papathemes/faceted-infinite-scroll.js b/assets/js/papathemes/faceted-infinite-scroll.js
+index 866853583..a3f5ee19c 100644
+--- a/assets/js/papathemes/faceted-infinite-scroll.js
++++ b/assets/js/papathemes/faceted-infinite-scroll.js
+@@ -1,6 +1,6 @@
+ /* eslint-disable no-console */
+ /* eslint-disable no-unused-expressions */
+-import { throttle } from 'lodash';
++import { debounce, throttle } from 'lodash';
+ import { api } from '@bigcommerce/stencil-utils';
+ 
+ const DEBUG = false;
+@@ -93,6 +93,7 @@ export class FacetedInfiniteScroll {
+         insertBottomPaginationFunc = ($pagination, $productListingContainer) => {},
+     } = {}) {
+         this.onScroll = throttle(this.onScroll.bind(this), 200);
++        this.replaceStateLastUrlDebounced = debounce(() => window.history.replaceState({}, document.title, this.lastUrl), 500);
+ 
+         this.productListingContainerSelector = productListingContainerSelector;
+         this.facetedSearchSelectorContainer = facetedSearchSelectorContainer;
+@@ -237,7 +238,8 @@ export class FacetedInfiniteScroll {
+      */
+     updateScrollingUrl() {
+         // the first product element in viewport
+-        const $el = $(this.productListingContainerSelector).find(this.productSelector)
++        const $products = $(this.productListingContainerSelector).find(this.productSelector);
++        const $el = $products
+             .filter((i, el) => {
+                 const { top, bottom } = el.getBoundingClientRect();
+                 return top >= 0 && top <= window.innerHeight || bottom >= 0 && bottom <= window.innerHeight;
+@@ -256,7 +258,7 @@ export class FacetedInfiniteScroll {
+                 url.searchParams.delete('page');
+             }
+ 
+-            const pageFirstEl = $(this.productListingContainerSelector).find(this.productSelector).filter(`[data-page="${page}"]`).get(0);
++            const pageFirstEl = $products.filter(`[data-page="${page}"]`).get(0);
+             const { top } = pageFirstEl.getBoundingClientRect();
+ 
+             url.hash = `#y=${Math.round(top)}`;
+@@ -266,7 +268,9 @@ export class FacetedInfiniteScroll {
+ 
+             DEBUG && console.log('Stored the lastUrl ', this.lastUrl);
+ 
+-            window.history.replaceState({}, document.title, url.toString());
++            // replaceState by the last URL
++            // window.history.replaceState({}, document.title, this.lastUrl);
++            this.replaceStateLastUrlDebounced();
+ 
+             // Disable the browser's scroll restoration when go back
+             window.history.scrollRestoration = 'manual';
+@@ -280,6 +284,7 @@ export class FacetedInfiniteScroll {
+      * @param {string} url the request URL that returns the content
+      */
+     refreshView(content, url = window.location.href) {
++        console.log('refreshView', content, url);
+         const $productListingContainer = $(this.productListingContainerSelector);
+         const $facetedSearchContainer = $(this.facetedSearchSelectorContainer);
+         const page = getPageFromUrl(url);
+@@ -313,18 +318,6 @@ export class FacetedInfiniteScroll {
+                     $productListingContainer.find(this.productGridSelector).append($productListing.find(this.productGridSelector).html());
+                 }
+ 
+-                // Scroll to the position specified by the window.location.hash
+-                // or the last scroll position
+-                if (window.location.hash) {
+-                    this.scrollTo();
+-                } else if (this.lastUrl) {
+-                    if (this.lastUrl.includes('#')) {
+-                        DEBUG && console.log('restore the lastUrl and scroll to ', this.lastUrl);
+-                        window.history.replaceState({}, document.title, this.lastUrl);
+-                        this.scrollTo();
+-                    }
+-                }
+-
+                 const curNextPage = getPageFromUrl($productListingContainer.find(this.paginationSelector).filter('._bottom').find(this.paginationItemNextSelector).find('a').attr('href'), 0);
+                 const curPrevPage = getPageFromUrl($productListingContainer.find(this.paginationSelector).filter('._top').find(this.paginationItemPrevSelector).find('a').attr('href'), 0);
+                 const nextPage = getPageFromUrl($productListing.find(this.paginationSelector).find(this.paginationItemNextSelector).find('a').attr('href'), 0);
+@@ -340,6 +333,18 @@ export class FacetedInfiniteScroll {
+                     $productListingContainer.find(this.paginationSelector).filter('._top').html($productListing.find(this.paginationSelector).html());
+                 }
+             }
++
++            // Scroll to the position specified by the window.location.hash
++            // or the last scroll position
++            if (window.location.hash) {
++                this.scrollTo();
++            } else if (this.lastUrl) {
++                if (this.lastUrl.includes('#')) {
++                    DEBUG && console.log('restore the lastUrl and scroll to ', this.lastUrl);
++                    window.history.replaceState({}, document.title, this.lastUrl);
++                    this.scrollTo();
++                }
++            }
+         } else {
+             // Replace the product listing by the new products
+             $productListingContainer.html(productListing);
+diff --git a/assets/js/theme/common/faceted-search.js b/assets/js/theme/common/faceted-search.js
+index 5b451e184..7335acb7c 100644
+--- a/assets/js/theme/common/faceted-search.js
++++ b/assets/js/theme/common/faceted-search.js
+@@ -642,8 +642,7 @@ class FacetedSearch {
+     }
+ 
+     onPopState() {
+-        const currentUrl = window.location.href;
+-        const searchParams = new URLSearchParams(currentUrl);
++        const searchParams = new URLSearchParams(window.location.search);
+         // If searchParams does not contain a page value then modify url query string to have page=1
+         if (!searchParams.has('page')) {
+             const linkUrl = $('.pagination-link').attr('href');
